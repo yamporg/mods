@@ -1,0 +1,41 @@
+darkness.main=Тьма
+darkness.main.tooltip=
+
+darkness.main.darkoverworld=Тьма в Верхнем мире
+darkness.main.darkoverworld.tooltip=Отключает минимальный уровень освещения в Верхнем мире.
+
+darkness.main.darknether=Тьма в Нижнем мире
+darkness.main.darknether.tooltip=Отключает минимальный уровень освещения в Нижнем мире.
+
+darkness.main.darkend=Тьма в Краю
+darkness.main.darkend.tooltip=Отключает минимальный уровень освещения в Краю.
+
+darkness.main.darkdefault=Тьма с небом
+darkness.main.darkdefault.tooltip=Отключает минимальный уровень освещения в измерениях с небом.
+
+darkness.main.darkskyless=Тьма без неба
+darkness.main.darkskyless.tooltip=Отключает минимальный уровень освещения в измерениях без неба.
+
+darkness.main.darknetherfog=Без тумана в Нижнем мире
+darkness.main.darknetherfog.tooltip=Отключает красный туман в Нижнем мире (заметно с эффектом “Ночное зрения”).
+
+darkness.main.darkendfog=Без тумана в Краю
+darkness.main.darkendfog.tooltip=Отключает розовый туман в Краю (заметно с эффектом “Ночное зрения”).
+
+darkness.main.hardcore=Кромешная тьма
+darkness.main.hardcore.tooltip=Ночью темно, хоть глаз выколи. Отключает динамический лунный свет.
+
+darkness.main.moonphasefactors=Яркость фаз луны
+darkness.main.moonphasefactors.tooltip=Лунный свет для каждой из восьми фаз.
+
+darkness.main.invertblacklist=Инвертировать чёрный список
+darkness.main.invertblacklist.tooltip=Чёрный список ведёт себя как белый список.
+
+darkness.main.blacklistbyid=Чёрный список по ID
+darkness.main.blacklistbyid.tooltip=Чёрный список по числовому идентификатору измерения. Доступные измерения можно найти командой "/forge dimensions".
+
+darkness.main.blacklistbyname=Чёрный список по названию
+darkness.main.blacklistbyname.tooltip=Чёрный список по названию типа измерения. Доступные измерения можно найти командой "/forge dimensions".
+
+darkness.main.disableconfiggui=Отключить интерфейс конфигурации
+darkness.main.disableconfiggui.tooltip=Отключает внутриигровой графический интерфейс конфигурации.

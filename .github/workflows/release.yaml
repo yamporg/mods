@@ -1,0 +1,35 @@
+name: CD
+on:
+  push:
+    tags:
+      - '*/v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v2
+
+      - name: Set up Gradle cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-build-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-build-
+
+      - uses: actions/github-script@v3
+        id: ref
+        with:
+          script: |
+            const [project, version] = context.ref.split('/', 2)
+            core.setOutput('project', project)
+            core.setOutput('version', version)
+
+
+      - name: Publish release ${{ steps.ref.outputs.version }}
+        run: gradle :${{ steps.ref.outputs.project }}:upload
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}

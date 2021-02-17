@@ -1,0 +1,55 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: ['**']
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v2
+
+      - name: Set up Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-build-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-build-
+
+      - name: Build with Gradle
+        run: gradle build
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: libs
+          path: |
+            */build/libs/*.jar
+            !buildSrc
+
+  format:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v2
+
+      - name: Set up Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-spotlessApply-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-spotlessApply-
+
+      - name: Reformat with Gradle
+        run: gradle spotlessApply
+
+      - name: Push changes to origin
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -a -m "Run gradle spotlessApply" || exit 0
+          git push

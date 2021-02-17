@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "darkness",
+    "name": "Darkness",
+    "description": "Adds dynamic moon light and changes minimal light/brightness level.",
+    "version": "${version}",
+    "mcversion": "1.12.2",
+    "url": "https://github.com/yamporg/mods/tree/main/darkness-1.12.x",
+    "updateUrl": "",
+    "authorList": [
+      "Ivan Trubach"
+    ],
+    "logoFile": "assets/darkness/logo.png",
+    "useDependencyInformation": true
+  }
+]
