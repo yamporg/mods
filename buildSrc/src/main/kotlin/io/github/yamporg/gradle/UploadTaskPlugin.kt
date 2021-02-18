@@ -10,7 +10,7 @@ class UploadTaskPlugin : Plugin<Project> {
             group = BasePlugin.UPLOAD_GROUP
             dependsOn(
                 target.tasks.filter {
-                    it.group == group
+                    it.group == group && it != this
                 }
             )
         }
