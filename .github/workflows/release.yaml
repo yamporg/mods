@@ -23,7 +23,8 @@ jobs:
         id: ref
         with:
           script: |
-            const [project, version] = context.ref.split('/', 2)
+            const tagName = context.ref.slice("refs/tags/".length)
+            const [project, version] = tagName.split('/', 2)
             core.setOutput('project', project)
             core.setOutput('version', version)
 
