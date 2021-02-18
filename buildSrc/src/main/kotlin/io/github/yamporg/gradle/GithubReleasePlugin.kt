@@ -20,7 +20,7 @@ class GithubReleasePlugin : Plugin<Project> {
 
             // Do nothing if we are not in CI environment.
             val githubActions = System.getenv("GITHUB_ACTIONS") == "true"
-            if (githubActions) {
+            if (!githubActions) {
                 return@withId
             }
 
