@@ -3,6 +3,7 @@ plugins {
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("co.riiid.gradle") version "0.4.2"
     id("io.github.yamporg.gradle.env-version")
+    id("io.github.yamporg.gradle.upload-task")
     id("io.github.yamporg.gradle.curse-release")
     id("io.github.yamporg.gradle.github-release")
     id("io.github.yamporg.gradle.reproducible-builds")

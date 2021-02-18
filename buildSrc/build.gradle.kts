@@ -12,6 +12,10 @@ gradlePlugin {
             id = "io.github.yamporg.gradle.env-version"
             implementationClass = "io.github.yamporg.gradle.EnvVersionPlugin"
         }
+        register("upload-task") {
+            id = "io.github.yamporg.gradle.upload-task"
+            implementationClass = "io.github.yamporg.gradle.UploadTaskPlugin"
+        }
         register("curse-release") {
             id = "io.github.yamporg.gradle.curse-release"
             implementationClass = "io.github.yamporg.gradle.CurseReleasePlugin"
