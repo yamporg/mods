@@ -30,20 +30,30 @@ class GithubReleasePlugin : Plugin<Project> {
                 return@withId
             }
 
+            val githubRepository = System.getenv("GITHUB_REPOSITORY") ?: ""
+            val (repo, owner) = githubRepository.split("/", limit = 2)
+
+            val githubRef = System.getenv("GITHUB_REF") ?: ""
+            val tagName = githubRef.removePrefix("refs/tags/")
+
+            val githubSha = System.getenv("GITHUB_SHA") ?: ""
+
             val cls = Class.forName(
                 "co.riiid.gradle.GithubExtension",
                 false, javaClass.classLoader
             )
             val setTokenMethod = cls.getDeclaredMethod("setToken", String::class.java)
             val setRepoMethod = cls.getDeclaredMethod("setRepo", String::class.java)
+            val setOwnerMethod = cls.getDeclaredMethod("setOwner", String::class.java)
             val setTagNameMethod = cls.getDeclaredMethod("setTagName", String::class.java)
-            val setTargetCommitishMethod = cls.getDeclaredMethod("targetCommitish", String::class.java)
+            val setTargetCommitishMethod = cls.getDeclaredMethod("setTargetCommitish", String::class.java)
 
             target.extensions.configure(cls) {
                 setTokenMethod(this, githubToken)
-                setRepoMethod(this, System.getenv("GITHUB_REPOSITORY"))
-                setTagNameMethod(this, System.getenv("GITHUB_REF"))
-                setTargetCommitishMethod(this, System.getenv("GITHUB_SHA"))
+                setRepoMethod(this, repo)
+                setOwnerMethod(this, owner)
+                setTagNameMethod(this, tagName)
+                setTargetCommitishMethod(this, githubSha)
             }
         }
     }
