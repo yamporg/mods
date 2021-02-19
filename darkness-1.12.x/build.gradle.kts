@@ -1,6 +1,6 @@
 plugins {
     id("net.minecraftforge.gradle") version "4.0.16"
-    id("org.spongepowered.mixin") version "0.7-SNAPSHOT"
+    id("org.spongepowered.mixin") version "0.7-20200916.104125-6"
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("co.riiid.gradle") version "0.4.2"
     id("io.github.yamporg.gradle.env-version")
