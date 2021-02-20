@@ -1,7 +1,7 @@
 /.idea
-/*/out
 /.gradle
 /buildSrc/.gradle
 /build
 /*/build
 /*/run
+/*/out
