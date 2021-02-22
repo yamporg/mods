@@ -1,5 +1,5 @@
 plugins {
-    id("net.minecraftforge.gradle") version "4.0.13"
+    id("net.minecraftforge.gradle") version "4.0.19"
     id("org.spongepowered.mixin") version "0.7-20200916.104125-6"
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("co.riiid.gradle") version "0.4.2"
