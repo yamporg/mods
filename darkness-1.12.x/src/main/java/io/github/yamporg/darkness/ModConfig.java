@@ -2,8 +2,8 @@ package io.github.yamporg.darkness;
 
 import net.minecraftforge.common.config.Config;
 
-@Config(modid = DarknessMod.MOD_ID, category = "main")
-public class DarknessConfig {
+@Config(modid = ModContainer.MOD_ID, category = "main")
+public final class ModConfig {
     public static boolean disableConfigGui = false;
 
     public static boolean darkOverworld = true;

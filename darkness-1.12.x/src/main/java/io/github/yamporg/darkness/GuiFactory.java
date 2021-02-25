@@ -6,18 +6,18 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.IModGuiFactory;
 import net.minecraftforge.fml.client.config.GuiConfig;
 
-public class GuiFactory implements IModGuiFactory {
+public final class GuiFactory implements IModGuiFactory {
     @Override
     public void initialize(Minecraft mc) {}
 
     @Override
     public boolean hasConfigGui() {
-        return !DarknessConfig.disableConfigGui;
+        return !ModConfig.disableConfigGui;
     }
 
     @Override
     public GuiScreen createConfigGui(GuiScreen parentScreen) {
-        return new GuiConfig(parentScreen, DarknessMod.MOD_ID, DarknessMod.NAME);
+        return new GuiConfig(parentScreen, ModContainer.MOD_ID, ModContainer.MOD_NAME);
     }
 
     @Override

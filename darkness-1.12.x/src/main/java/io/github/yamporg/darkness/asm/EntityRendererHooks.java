@@ -1,43 +1,25 @@
-package io.github.yamporg.darkness.mixins;
+package io.github.yamporg.darkness.asm;
 
-import io.github.yamporg.darkness.DarknessConfig;
-import net.minecraft.client.Minecraft;
+import io.github.yamporg.darkness.ModConfig;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(EntityRenderer.class)
-public abstract class MixinEntityRenderer {
-    @Shadow private Minecraft mc;
-    @Shadow private boolean lightmapUpdateNeeded;
-    @Shadow private float torchFlickerX;
-    @Shadow private float bossColorModifier;
-    @Shadow private float bossColorModifierPrev;
-    @Shadow private int[] lightmapColors;
-
-    private static final String UPDATE_DYNAMIC_TEXTURE =
-            "Lnet/minecraft/client/renderer/texture/DynamicTexture;updateDynamicTexture()V";
-
-    @Inject(method = "updateLightmap", at = @At(value = "INVOKE", target = UPDATE_DYNAMIC_TEXTURE))
-    private void onUpdateLightmap(float partialTicks, CallbackInfo ci) {
-        if (!lightmapUpdateNeeded) {
+public final class EntityRendererHooks {
+    public static void onUpdateLightmap(EntityRenderer renderer, float partialTicks) {
+        if (!renderer.lightmapUpdateNeeded) {
             return;
         }
-        World world = mc.world;
+        World world = renderer.mc.world;
         if (world == null) {
             return;
         }
 
         // Use vanilla lightmap for night vision effect.
-        if (mc.player.isPotionActive(MobEffects.NIGHT_VISION)) {
+        if (renderer.mc.player.isPotionActive(MobEffects.NIGHT_VISION)) {
             return;
         }
         // Same for the lightning.
@@ -48,31 +30,30 @@ public abstract class MixinEntityRenderer {
         if (blacklistDim(world.provider)) {
             return;
         }
-
-        this.updateLuminance(partialTicks, world);
+        updateLuminance(renderer, partialTicks, world);
     }
 
     private static boolean blacklistDim(WorldProvider dim) {
         // Yet another special case for End.
         // Blacklist if darkness is disabled.
         DimensionType dimType = dim.getDimensionType();
-        if (dimType == DimensionType.THE_END && !DarknessConfig.darkEnd) {
+        if (dimType == DimensionType.THE_END && !ModConfig.darkEnd) {
             return true;
         }
-        return blacklistContains(dim, dimType) ^ DarknessConfig.invertBlacklist;
+        return blacklistContains(dim, dimType) ^ ModConfig.invertBlacklist;
     }
 
     private static boolean blacklistContains(WorldProvider dim, DimensionType dimType) {
         String dimName = dimType.getName();
-        for (String blacklistName : DarknessConfig.blacklistByName) {
-            if (blacklistName != dimName) {
+        for (String blacklistName : ModConfig.blacklistByName) {
+            if (!blacklistName.equals(dimName)) {
                 continue;
             }
             return true;
         }
 
         int dimID = dim.getDimension();
-        for (int blacklistID : DarknessConfig.blacklistByID) {
+        for (int blacklistID : ModConfig.blacklistByID) {
             if (dimID != blacklistID) {
                 continue;
             }
@@ -84,15 +65,15 @@ public abstract class MixinEntityRenderer {
 
     private static boolean isDark(WorldProvider dim, DimensionType dimType) {
         if (dimType == DimensionType.OVERWORLD) {
-            return DarknessConfig.darkOverworld;
+            return ModConfig.darkOverworld;
         } else if (dimType == DimensionType.NETHER) {
-            return DarknessConfig.darkNether;
+            return ModConfig.darkNether;
         } else if (dimType == DimensionType.THE_END) {
-            return DarknessConfig.darkEnd;
+            return ModConfig.darkEnd;
         } else if (dim.hasSkyLight()) {
-            return DarknessConfig.darkDefault;
+            return ModConfig.darkDefault;
         } else {
-            return DarknessConfig.darkSkyless;
+            return ModConfig.darkSkyless;
         }
     }
 
@@ -114,9 +95,9 @@ public abstract class MixinEntityRenderer {
         }
 
         final float moon;
-        if (!DarknessConfig.hardcore) {
+        if (!ModConfig.hardcore) {
             final int moonPhase = dim.getMoonPhase(world.getWorldTime());
-            final float[] phaseFactors = DarknessConfig.moonPhaseFactors;
+            final float[] phaseFactors = ModConfig.moonPhaseFactors;
             if (moonPhase < phaseFactors.length) {
                 moon = phaseFactors[moonPhase];
             } else {
@@ -136,7 +117,11 @@ public abstract class MixinEntityRenderer {
         return lerp(w * w, moon, 1f);
     }
 
-    private void updateLuminance(float partialTicks, World world) {
+    /**
+     * Computes darker colors using vanilla-like algorithm and uses their luminance to darken the
+     * original color in light map.
+     */
+    private static void updateLuminance(EntityRenderer renderer, float partialTicks, World world) {
         WorldProvider dim = world.provider;
         DimensionType dimType = dim.getDimensionType();
 
@@ -166,9 +151,9 @@ public abstract class MixinEntityRenderer {
             float skyGreen = skyBase * (rawAmbient * (1 - min) + min);
             float skyBlue = skyBase;
 
-            if (this.bossColorModifier > 0.0F) {
-                float d = this.bossColorModifier - this.bossColorModifierPrev;
-                float m = this.bossColorModifierPrev + partialTicks * d;
+            if (renderer.bossColorModifier > 0.0F) {
+                float d = renderer.bossColorModifier - renderer.bossColorModifierPrev;
+                float m = renderer.bossColorModifierPrev + partialTicks * d;
                 skyRed = skyRed * (1.0F - m) + skyRed * 0.7F * m;
                 skyGreen = skyGreen * (1.0F - m) + skyGreen * 0.6F * m;
                 skyBlue = skyBlue * (1.0F - m) + skyBlue * 0.6F * m;
@@ -180,7 +165,7 @@ public abstract class MixinEntityRenderer {
                 blockFactor = 1 - blockFactor * blockFactor * blockFactor * blockFactor;
             }
 
-            final float flicker = this.torchFlickerX * 0.1F + 1.5F;
+            final float flicker = renderer.torchFlickerX * 0.1F + 1.5F;
             final float blockBase = blockFactor * brightnessTable[blockIndex] * flicker;
             min = 0.4f * blockFactor;
 
@@ -207,7 +192,7 @@ public abstract class MixinEntityRenderer {
             green = MathHelper.clamp(green, 0f, 1f);
             blue = MathHelper.clamp(blue, 0f, 1f);
 
-            final float gamma = mc.gameSettings.gammaSetting * f;
+            final float gamma = renderer.mc.gameSettings.gammaSetting * f;
             float invRed = 1.0F - red;
             float invGreen = 1.0F - green;
             float invBlue = 1.0F - blue;
@@ -228,11 +213,15 @@ public abstract class MixinEntityRenderer {
             blue = MathHelper.clamp(blue, 0f, 1f);
 
             float lTarget = luminance(red, green, blue);
-            int c = this.lightmapColors[i];
-            this.lightmapColors[i] = darken(c, lTarget);
+            int c = renderer.lightmapColors[i];
+            renderer.lightmapColors[i] = darken(c, lTarget);
         }
     }
 
+    /**
+     * Darkens the luminance of color c to match lTarget luminance. Returns original value if the
+     * color is darker then lTarget.
+     */
     private static int darken(int c, float lTarget) {
         final float r = (c & 0xFF) / 255f;
         final float g = ((c >> 8) & 0xFF) / 255f;
@@ -252,11 +241,12 @@ public abstract class MixinEntityRenderer {
         return c;
     }
 
+    /** Computes luminance of an RGB color. See https://en.wikipedia.org/wiki/Relative_luminance */
     private static float luminance(float r, float g, float b) {
-        // See https://en.wikipedia.org/wiki/Relative_luminance
         return r * 0.2126f + g * 0.7152f + b * 0.0722f;
     }
 
+    /** Returns the linear interpolation between f and g for the parameter h. */
     private static float lerp(float f, float g, float h) {
         return g + f * (h - g);
     }

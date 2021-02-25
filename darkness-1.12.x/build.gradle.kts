@@ -1,6 +1,5 @@
 plugins {
     id("net.minecraftforge.gradle") version "4.0.19"
-    id("org.spongepowered.mixin") version "0.7-20200916.104125-6"
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("co.riiid.gradle") version "0.4.2"
     id("io.github.yamporg.gradle.env-version")
@@ -15,6 +14,7 @@ plugins {
 
 minecraft {
     mappings("stable", "39-1.12")
+    accessTransformer(file("src/main/resources/META-INF/accesstransformer.cfg"))
     runs {
         create("client") {
             properties(
@@ -28,15 +28,8 @@ minecraft {
     }
 }
 
-repositories {
-    maven { url = uri("https://repo.spongepowered.org/maven") }
-}
-
 dependencies {
     minecraft("net.minecraftforge:forge:1.12.2-14.23.5.2855")
-
-    implementation("org.spongepowered:mixin:0.8.2")
-    annotationProcessor("org.spongepowered:mixin:0.8.2:processor")
 }
 
 java {
@@ -48,8 +41,7 @@ java {
 
 tasks.jar {
     manifest.attributes(
-        "FMLCorePluginContainsFMLMod" to true,
-        "FMLCorePlugin" to "io.github.yamporg.darkness.DarknessLoadingPlugin"
+        "FMLCorePlugin" to "io.github.yamporg.darkness.LoadingPlugin"
     )
 }
 

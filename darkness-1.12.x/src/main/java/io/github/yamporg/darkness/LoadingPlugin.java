@@ -1,27 +1,24 @@
 package io.github.yamporg.darkness;
 
+import io.github.yamporg.darkness.asm.EntityRendererTransformer;
+import io.github.yamporg.darkness.asm.WorldProviderTransformer;
 import java.util.Map;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import org.spongepowered.asm.launch.MixinBootstrap;
-import org.spongepowered.asm.mixin.Mixins;
 
-@IFMLLoadingPlugin.Name(DarknessMod.MOD_ID)
+@IFMLLoadingPlugin.Name(ModContainer.MOD_ID)
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
-public class DarknessLoadingPlugin implements IFMLLoadingPlugin {
-    public DarknessLoadingPlugin() {
-        MixinBootstrap.init();
-        Mixins.addConfiguration("darkness.mixins.json");
-    }
-
+public final class LoadingPlugin implements IFMLLoadingPlugin {
     @Override
     public String[] getASMTransformerClass() {
-        return new String[0];
+        return new String[] {
+            WorldProviderTransformer.class.getName(), EntityRendererTransformer.class.getName(),
+        };
     }
 
     @Override
     public String getModContainerClass() {
-        return null;
+        return ModContainer.class.getName();
     }
 
     @Override
