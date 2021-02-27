@@ -49,7 +49,7 @@ jobs:
 
       - name: Push changes to origin
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name actions-user
+          git config user.email actions@github.com
           git commit -a -m "Run gradle spotlessApply" || exit 0
           git push
