@@ -43,7 +43,8 @@ java {
 
 tasks.jar {
     manifest.attributes(
-        "FMLCorePlugin" to "io.github.yamporg.darkness.LoadingPlugin"
+        "FMLCorePlugin" to "io.github.yamporg.darkness.LoadingPlugin",
+        "FMLAT" to "accesstransformer.cfg"
     )
 }
 
