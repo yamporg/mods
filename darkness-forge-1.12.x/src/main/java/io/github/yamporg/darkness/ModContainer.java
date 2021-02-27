@@ -41,17 +41,17 @@ public final class ModContainer extends DummyModContainer {
     }
 
     @Subscribe
-    public void modConstruction(FMLConstructionEvent event) {
-        ConfigManager.sync(getModId(), Config.Type.INSTANCE);
+    public void onModConstruction(FMLConstructionEvent event) {
+        ModConfig.inject();
+        ConfigManager.sync(MOD_ID, Config.Type.INSTANCE);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        String modID = event.getModID();
-        if (!MOD_ID.equals(modID)) {
+        if (!MOD_ID.equals(event.getModID())) {
             return;
         }
-        ConfigManager.sync(modID, Config.Type.INSTANCE);
+        ConfigManager.sync(MOD_ID, Config.Type.INSTANCE);
     }
 }
