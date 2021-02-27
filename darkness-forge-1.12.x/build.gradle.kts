@@ -57,16 +57,7 @@ curseforge {
             changelogType = "markdown"
             changelog = file("CHANGELOG.md")
 
-            mainArtifact(
-                tasks["jar"],
-                closureOf<com.matthewprenger.cursegradle.CurseArtifact> {
-                    relations(
-                        closureOf<com.matthewprenger.cursegradle.CurseRelation> {
-                            requiredDependency("mixinbootstrap")
-                        }
-                    )
-                }
-            )
+            mainArtifact(tasks["jar"])
             addArtifact(tasks["sourcesJar"])
         }
     )
