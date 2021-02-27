@@ -65,5 +65,5 @@ curseforge {
 
 github {
     body = file("CHANGELOG.md").readText()
-    setAssets(*tasks["jar"].outputs.files.map { name }.toTypedArray())
+    setAssets(tasks.jar.get().archiveFile.get().asFile.path)
 }
