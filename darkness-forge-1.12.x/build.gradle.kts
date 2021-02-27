@@ -21,7 +21,7 @@ minecraft {
                 mapOf(
                     "forge.logging.markers" to "SCAN,REGISTRIES,REGISTRYDUMP",
                     "forge.logging.console.level" to "debug",
-                    "fml.coreMods.load" to "io.github.yamporg.darkness.DarknessLoadingPlugin"
+                    "fml.coreMods.load" to "io.github.yamporg.darkness.LoadingPlugin"
                 )
             )
         }
