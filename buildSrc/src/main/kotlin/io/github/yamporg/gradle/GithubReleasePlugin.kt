@@ -31,7 +31,7 @@ class GithubReleasePlugin : Plugin<Project> {
             }
 
             val githubRepository = System.getenv("GITHUB_REPOSITORY") ?: ""
-            val (repo, owner) = githubRepository.split("/", limit = 2)
+            val (owner, repo) = githubRepository.split("/", limit = 2)
 
             val githubRef = System.getenv("GITHUB_REF") ?: ""
             val tagName = githubRef.removePrefix("refs/tags/")
