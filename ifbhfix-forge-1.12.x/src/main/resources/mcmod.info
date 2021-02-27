@@ -5,7 +5,7 @@
     "description": "Fixes Industrial Foregoing Black Hole Controller inventory lock.",
     "version": "${version}",
     "mcversion": "1.12.2",
-    "url": "https://github.com/yamporg/mods/tree/main/ifbhfix-1.12.x",
+    "url": "https://github.com/yamporg/mods",
     "updateUrl": "",
     "authorList": [
       "Ivan Trubach"

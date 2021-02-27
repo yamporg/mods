@@ -8,7 +8,7 @@ class EnvVersionPlugin : Plugin<Project> {
         // EnvVersionPlugin allows setting the version from Git tag ref of a release.
         // Note that we default to "snapshot" version unless ref is a tag, and we trigger
         // releases by pushing Git tags. Tags are similar to what Go submodules have.
-        // Example: refs/tags/darkness-1.12.x/v0.3.1
+        // Example: refs/tags/darkness-forge-1.12.x/v0.3.1
 
         val ref = System.getenv("GITHUB_REF") ?: ""
         val tagPrefix = "refs/tags/"

@@ -20,6 +20,6 @@ pluginManagement {
 rootProject.name = "mods"
 
 include(
-    "darkness-1.12.x",
-    "ifbhfix-1.12.x"
+    "darkness-forge-1.12.x",
+    "ifbhfix-forge-1.12.x"
 )

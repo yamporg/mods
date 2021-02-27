@@ -50,15 +50,15 @@ gradle genIntellijRuns
 
 Alternatively, just run the Gradle task without generating IDE configuration.
 ```
-gradle :darkness-1.12.x:runClient
+gradle :darkness-forge-1.12.x:runClient
 ```
 
 ## Releasing
 
-The CI runs upload task on tag push. The tag must follow the `<project>/v<semver>` format where `<project>` is the name of the project (e.g. `darkness-1.12.x`) and `<semver>` is the [semantic version](https://semver.org).  
-For example, to publish release v0.4.0-beta of darkness-1.12.x, run the following:
+The CI runs upload task on tag push. The tag must follow the `<project>/v<semver>` format where `<project>` is the name of the project (e.g. `darkness-forge-1.12.x`) and `<semver>` is the [semantic version](https://semver.org).  
+For example, to publish release v0.4.0-beta of darkness-forge-1.12.x, run the following:
 ```
-git tag darkness-1.12.x/v0.4.0-beta
+git tag darkness-forge-1.12.x/v0.4.0-beta
 git push --tags
 ```
 
@@ -66,6 +66,6 @@ git push --tags
 
 If you are getting HTTP 503’s errors for CurseForge API, set up a proxy. E.g. something like the command below is good enough for local testing.
 ```
-CURSEFORGE_TOKEN=xxx gradle :darkness-1.12.x:curseforge -D'org.gradle.jvmargs=-DsocksProxyHost=45.79.207.110 -DsocksProxyPort=9200'
+CURSEFORGE_TOKEN=xxx gradle :darkness-forge-1.12.x:curseforge -D'org.gradle.jvmargs=-DsocksProxyHost=45.79.207.110 -DsocksProxyPort=9200'
 ```
 Also, I have no freaking idea why is that happening. I’ve tried connecting from two distinct local ISPs and that didn’t help.
