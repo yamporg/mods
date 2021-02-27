@@ -10,7 +10,7 @@
     "authorList": [
       "Ivan Trubach"
     ],
-    "logoFile": "assets/darkness/logo.png",
+    "logoFile": "/assets/darkness/logo.png",
     "useDependencyInformation": true
   }
 ]
