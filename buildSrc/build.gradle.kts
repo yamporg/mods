@@ -32,6 +32,14 @@ gradlePlugin {
             id = "io.github.yamporg.gradle.forge-modinfo-version"
             implementationClass = "io.github.yamporg.gradle.ForgeModInfoVersionPlugin"
         }
+        register("forge-idea-module-fix") {
+            id = "io.github.yamporg.gradle.forge-idea-module-fix"
+            implementationClass = "io.github.yamporg.gradle.ForgeIdeaModuleFixPlugin"
+        }
+        register("forge-run-javaexec-fix") {
+            id = "io.github.yamporg.gradle.forge-run-javaexec-fix"
+            implementationClass = "io.github.yamporg.gradle.ForgeRunJavaExecFixPlugin"
+        }
         register("forge-prepare-runs-fix") {
             id = "io.github.yamporg.gradle.forge-prepare-runs-fix"
             implementationClass = "io.github.yamporg.gradle.ForgePrepareRunsFixPlugin"

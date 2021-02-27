@@ -9,7 +9,7 @@ class UploadTaskPlugin : Plugin<Project> {
         target.tasks.register("upload") {
             group = BasePlugin.UPLOAD_GROUP
             dependsOn(
-                target.tasks.filter {
+                target.tasks.matching {
                     it.group == group && it != this
                 }
             )

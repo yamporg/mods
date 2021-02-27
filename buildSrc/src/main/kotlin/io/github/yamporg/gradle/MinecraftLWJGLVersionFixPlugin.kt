@@ -9,7 +9,7 @@ class MinecraftLWJGLVersionFixPlugin : Plugin<Project> {
         // and the latter does not exist. We fix that by using the newer version.
         //
         // See https://github.com/MinecraftForge/ForgeGradle/issues/627
-        target.configurations.all {
+        target.configurations.configureEach {
             resolutionStrategy {
                 eachDependency {
                     if (requested.group == "org.lwjgl.lwjgl" && requested.name == "lwjgl-platform") {

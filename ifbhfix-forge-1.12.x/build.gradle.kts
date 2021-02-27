@@ -8,6 +8,8 @@ plugins {
     id("io.github.yamporg.gradle.github-release")
     id("io.github.yamporg.gradle.reproducible-builds")
     id("io.github.yamporg.gradle.forge-modinfo-version")
+    id("io.github.yamporg.gradle.forge-idea-module-fix")
+    id("io.github.yamporg.gradle.forge-run-javaexec-fix")
     id("io.github.yamporg.gradle.forge-prepare-runs-fix")
     id("io.github.yamporg.gradle.minecraft-lwjgl-version-fix")
 }

@@ -11,7 +11,7 @@ class ReproducibleBuildsPlugin : Plugin<Project> {
         // Make archive builds reproducible.
         //
         // See https://docs.gradle.org/6.8.1/userguide/working_with_files.html#sec:reproducible_archives
-        target.tasks.withType<AbstractArchiveTask> {
+        target.tasks.withType(AbstractArchiveTask::class).configureEach {
             isPreserveFileTimestamps = false
             isReproducibleFileOrder = true
         }
@@ -44,7 +44,7 @@ class ReproducibleBuildsPlugin : Plugin<Project> {
             val setArgs = jarExec.getDeclaredMethod("setArgs", Array<String>::class.java)
             val setTool = jarExec.getDeclaredMethod("setTool", String::class.java)
             @Suppress("UNCHECKED_CAST")
-            target.tasks.withType(cls as Class<Task>) {
+            target.tasks.withType(cls as Class<Task>).configureEach {
                 setArgs.invoke(this, getArgs.invoke(this) as Array<String> + "--stable")
                 setTool.invoke(this, "net.md-5:SpecialSource:1.8.6:shaded")
             }
