@@ -2,9 +2,12 @@ package io.github.yamporg.darkness;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import java.io.File;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.FMLFileResourcePack;
+import net.minecraftforge.fml.client.FMLFolderResourcePack;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.LoadController;
@@ -17,6 +20,20 @@ public final class ModContainer extends DummyModContainer {
 
     public ModContainer() {
         super(Workarounds.parseMetadata());
+    }
+
+    @Override
+    public File getSource() {
+        return LoadingPlugin.FILE_LOCATION;
+    }
+
+    @Override
+    public Class<?> getCustomResourcePackClass() {
+        if (getSource().isDirectory()) {
+            return FMLFolderResourcePack.class;
+        } else {
+            return FMLFileResourcePack.class;
+        }
     }
 
     @Override
