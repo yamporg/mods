@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Set up Gradle cache
         uses: actions/cache@v2.1.4
@@ -23,7 +23,7 @@ jobs:
         run: gradle build
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2.2.2
         with:
           name: libs
           path: |
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Set up Gradle cache
         uses: actions/cache@v2.1.4
@@ -51,5 +51,5 @@ jobs:
         run: |
           git config user.name actions-user
           git config user.email actions@github.com
-          git commit -a -m "Run gradle spotlessApply" || exit 0
+          git commit -a -m "Format source code" || exit 0
           git push
