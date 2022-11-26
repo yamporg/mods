@@ -1,17 +1,12 @@
 plugins {
-    id("net.minecraftforge.gradle") version "4.0.19"
-    id("com.matthewprenger.cursegradle") version "1.4.0"
+    id("net.minecraftforge.gradle") version "5.1.58"
+    id("io.github.CDAGaming.cursegradle") version "1.6.0"
     id("co.riiid.gradle") version "0.4.2"
     id("io.github.yamporg.gradle.env-version")
     id("io.github.yamporg.gradle.upload-task")
     id("io.github.yamporg.gradle.curse-release")
     id("io.github.yamporg.gradle.github-release")
     id("io.github.yamporg.gradle.reproducible-builds")
-    id("io.github.yamporg.gradle.forge-modinfo-version")
-    id("io.github.yamporg.gradle.forge-idea-module-fix")
-    id("io.github.yamporg.gradle.forge-run-javaexec-fix")
-    id("io.github.yamporg.gradle.forge-prepare-runs-fix")
-    id("io.github.yamporg.gradle.minecraft-lwjgl-version-fix")
 }
 
 repositories {
@@ -19,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.12.2-14.23.5.2855")
+    minecraft("net.minecraftforge:forge:1.12.2-14.23.5.2860")
 
     // https://www.curseforge.com/minecraft/mc-mods/shadowfacts-forgelin/files/2785465
     // Filename Forgelin-1.8.4.jar
@@ -41,8 +36,8 @@ minecraft {
             properties(
                 mapOf(
                     "forge.logging.markers" to "SCAN,REGISTRIES,REGISTRYDUMP",
-                    "forge.logging.console.level" to "debug"
-                )
+                    "forge.logging.console.level" to "debug",
+                ),
             )
         }
     }
@@ -55,28 +50,28 @@ java {
     }
 }
 
+tasks.processResources {
+    inputs.property("version", version)
+    filesMatching("/mcmod.info") {
+        expand("version" to version.toString())
+    }
+}
+
 curseforge {
-    project(
-        closureOf<com.matthewprenger.cursegradle.CurseProject> {
-            id = "446961"
-            releaseType = "release"
+    project {
+        id = "446961"
+        releaseType = "release"
 
-            changelogType = "markdown"
-            changelog = file("CHANGELOG.md")
+        changelogType = "markdown"
+        changelog = file("CHANGELOG.md")
 
-            mainArtifact(
-                tasks["jar"],
-                closureOf<com.matthewprenger.cursegradle.CurseArtifact> {
-                    relations(
-                        closureOf<com.matthewprenger.cursegradle.CurseRelation> {
-                            requiredDependency("industrial-foregoing")
-                        }
-                    )
-                }
-            )
-            addArtifact(tasks["sourcesJar"])
+        mainArtifact(tasks["jar"]) {
+            relations {
+                requiredDependency("industrial-foregoing")
+            }
         }
-    )
+        addArtifact(tasks["sourcesJar"])
+    }
 }
 
 github {

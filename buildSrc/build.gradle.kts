@@ -3,7 +3,7 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 gradlePlugin {
@@ -27,26 +27,6 @@ gradlePlugin {
         register("reproducible-builds") {
             id = "io.github.yamporg.gradle.reproducible-builds"
             implementationClass = "io.github.yamporg.gradle.ReproducibleBuildsPlugin"
-        }
-        register("forge-modinfo-version") {
-            id = "io.github.yamporg.gradle.forge-modinfo-version"
-            implementationClass = "io.github.yamporg.gradle.ForgeModInfoVersionPlugin"
-        }
-        register("forge-idea-module-fix") {
-            id = "io.github.yamporg.gradle.forge-idea-module-fix"
-            implementationClass = "io.github.yamporg.gradle.ForgeIdeaModuleFixPlugin"
-        }
-        register("forge-run-javaexec-fix") {
-            id = "io.github.yamporg.gradle.forge-run-javaexec-fix"
-            implementationClass = "io.github.yamporg.gradle.ForgeRunJavaExecFixPlugin"
-        }
-        register("forge-prepare-runs-fix") {
-            id = "io.github.yamporg.gradle.forge-prepare-runs-fix"
-            implementationClass = "io.github.yamporg.gradle.ForgePrepareRunsFixPlugin"
-        }
-        register("minecraft-lwjgl-version-fix") {
-            id = "io.github.yamporg.gradle.minecraft-lwjgl-version-fix"
-            implementationClass = "io.github.yamporg.gradle.MinecraftLWJGLVersionFixPlugin"
         }
     }
 }

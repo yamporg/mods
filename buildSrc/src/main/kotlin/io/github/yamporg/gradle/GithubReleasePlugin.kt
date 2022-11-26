@@ -3,7 +3,6 @@ package io.github.yamporg.gradle
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
-import org.gradle.api.plugins.BasePlugin
 
 class GithubReleasePlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -12,10 +11,11 @@ class GithubReleasePlugin : Plugin<Project> {
             @Suppress("UNCHECKED_CAST")
             val taskClass = Class.forName(
                 "co.riiid.gradle.ReleaseTask",
-                false, javaClass.classLoader
+                false,
+                javaClass.classLoader,
             ) as Class<Task>
             target.tasks.named("githubRelease", taskClass) {
-                group = BasePlugin.UPLOAD_GROUP
+                group = UploadTaskPlugin.GROUP_NAME
             }
 
             // Do nothing if we are not in CI environment.
@@ -40,7 +40,8 @@ class GithubReleasePlugin : Plugin<Project> {
 
             val cls = Class.forName(
                 "co.riiid.gradle.GithubExtension",
-                false, javaClass.classLoader
+                false,
+                javaClass.classLoader,
             )
             val setTokenMethod = cls.getDeclaredMethod("setToken", String::class.java)
             val setRepoMethod = cls.getDeclaredMethod("setRepo", String::class.java)
