@@ -13,11 +13,11 @@ Monorepo for Minecraft mod projects.
 
 <p>
     <a title="Dynamic Darkness mod" href="https://www.curseforge.com/minecraft/mc-mods/dynamic-darkness">
-        <img src="http://cf.way2muchnoise.eu/full_dynamic-darkness_Darkness%20%7C_downloads.svg?badge_style=for_the_badge" alt="Dynamic Darkness mod downloads counter badge">
+        <img src="https://cf.way2muchnoise.eu/full_363102_Darkness%20%7C_downloads.svg?badge_style=for_the_badge" alt="Dynamic Darkness mod downloads counter badge">
     </a>
     <br>
     <a title="IFBHFix mod" href="https://www.curseforge.com/minecraft/mc-mods/ifbhfix">
-        <img src="http://cf.way2muchnoise.eu/full_ifbhfix_IFBHFix%20%7C_downloads.svg?badge_style=for_the_badge" alt="IFBHFix mod downloads counter badge">
+        <img src="https://cf.way2muchnoise.eu/full_446961_IFBHFix%20%7C_downloads.svg?badge_style=for_the_badge" alt="IFBHFix mod downloads counter badge">
     </a>
 </p>
 
@@ -43,7 +43,7 @@ That would output jar archives to `<project-name>/build/libs` directory.
 
 ### Running
 
-Each subproject defines either runClient or runServer tasks, or both, if it makes sense. To generate run/debug configurations, execute genIntellijRuns task. You may need to reopen the project afterwards. It’s also possible to [build and run using IntelliJ IDEA](https://gist.github.com/quat1024/8bf436c85e5c140d27d49a7dc6c09982).
+Each subproject defines either runClient or runServer tasks, or both, if it makes sense. To generate run/debug configurations, execute genIntellijRuns task. You may need to reopen the project and/or change SDK version in the generated configuration afterwards.
 ```
 gradle genIntellijRuns
 ```
@@ -61,6 +61,22 @@ For example, to publish release v0.4.0-beta of darkness-forge-1.12.x, run the fo
 git tag darkness-forge-1.12.x/v0.4.0-beta
 git push --tags
 ```
+
+## Known Issues
+
+This section discusses known issues that may occur during development process.
+
+### runClient crashes with NPE at newChannel
+
+There seems to be an issue with interactions between ForgeGradle and Minecraft 1.12.x where the required libraries are missing when runClient task is called outside of IDE with clean cache. The workaround is to bootstrap the cache using an IDE.
+
+See https://github.com/MinecraftForge/ForgeGradle/issues/750
+
+### Resources are missing in runClient
+
+For some reason resources are not loaded with Minecraft 1.12.x in runClient task unless we put them to classes directory directly. Newer version of Minecraft work just fine though. We used to have a workaround based on [build.gradle from Chiseled Me mod](https://github.com/necauqua/chiseled-me/blob/f8b94ab08ff39c46c58120027de4361597a1a473/build.gradle#L30-L39), but removed it to avoid maintenance burden.
+
+See https://github.com/MinecraftForge/ForgeGradle/issues/717 and https://redd.it/e4hfzz
 
 ### 503’s from CurseForge (or is it Cloudflare?)
 
