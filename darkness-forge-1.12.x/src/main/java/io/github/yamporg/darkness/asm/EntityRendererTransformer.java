@@ -66,10 +66,10 @@ public final class EntityRendererTransformer implements IClassTransformer {
                                     String desc,
                                     boolean itf) {
                                 if (!itf
-                                        && Opcodes.INVOKEVIRTUAL != opcode
-                                        && !UPDATE_DYNAMIC_TEXTURE_OWNER.equals(owner)
-                                        && !UPDATE_DYNAMIC_TEXTURE_NAME.equals(name)
-                                        && !UPDATE_DYNAMIC_TEXTURE_DESC.equals(desc)) {
+                                        && Opcodes.INVOKEVIRTUAL == opcode
+                                        && UPDATE_DYNAMIC_TEXTURE_OWNER.equals(owner)
+                                        && UPDATE_DYNAMIC_TEXTURE_NAME.equals(name)
+                                        && UPDATE_DYNAMIC_TEXTURE_DESC.equals(desc)) {
                                     loadThis();
                                     loadArgs();
                                     invokeStatic(
