@@ -6,11 +6,11 @@ import org.gradle.api.Task
 
 class GithubReleasePlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.plugins.withId("co.riiid.gradle") {
+        target.plugins.withId("com.github.breadmoirai.github-release") {
             // Move githubRelease task to upload group.
             @Suppress("UNCHECKED_CAST")
             val taskClass = Class.forName(
-                "co.riiid.gradle.ReleaseTask",
+                "com.github.breadmoirai.githubreleaseplugin.GithubReleaseTask",
                 false,
                 javaClass.classLoader,
             ) as Class<Task>
@@ -39,15 +39,16 @@ class GithubReleasePlugin : Plugin<Project> {
             val githubSha = System.getenv("GITHUB_SHA") ?: ""
 
             val cls = Class.forName(
-                "co.riiid.gradle.GithubExtension",
+                "com.github.breadmoirai.githubreleaseplugin.GithubReleaseExtension",
                 false,
                 javaClass.classLoader,
             )
-            val setTokenMethod = cls.getDeclaredMethod("setToken", String::class.java)
+            val setTokenMethod = cls.getDeclaredMethod("setToken", CharSequence::class.java)
             val setRepoMethod = cls.getDeclaredMethod("setRepo", String::class.java)
             val setOwnerMethod = cls.getDeclaredMethod("setOwner", String::class.java)
             val setTagNameMethod = cls.getDeclaredMethod("setTagName", String::class.java)
             val setTargetCommitishMethod = cls.getDeclaredMethod("setTargetCommitish", String::class.java)
+            val setReleaseNameMethod = cls.getDeclaredMethod("setReleaseName", String::class.java)
 
             target.extensions.configure(cls) {
                 setTokenMethod(this, githubToken)
@@ -55,6 +56,7 @@ class GithubReleasePlugin : Plugin<Project> {
                 setOwnerMethod(this, owner)
                 setTagNameMethod(this, tagName)
                 setTargetCommitishMethod(this, githubSha)
+                setReleaseNameMethod(this, tagName)
             }
         }
     }
