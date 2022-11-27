@@ -23,12 +23,12 @@ jobs:
       - uses: actions/github-script@v6.3.3
         id: ref
         with:
-        script: |
-          const tagName = context.ref.slice("refs/tags/".length)
-          const [project, version] = tagName.split('/', 2)
-          core.setOutput('tagName', tagName)
-          core.setOutput('project', project)
-          core.setOutput('version', version)
+          script: |
+            const tagName = context.ref.slice("refs/tags/".length)
+            const [project, version] = tagName.split('/', 2)
+            core.setOutput('tagName', tagName)
+            core.setOutput('project', project)
+            core.setOutput('version', version)
 
       - name: Publish release ${{ steps.ref.outputs.tagName }}
         run: gradle :${{ steps.ref.outputs.project }}:upload
