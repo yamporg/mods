@@ -1,9 +1,9 @@
 <p align=center>
     <a title="CI workflow" href="https://github.com/yamporg/mods/actions/workflows/main.yaml">
-        <img src="https://img.shields.io/github/workflow/status/yamporg/mods/CI?style=for-the-badge&logo=github" alt="CI workflow build status badge">
+        <img src="https://img.shields.io/github/actions/workflow/status/yamporg/mods/main.yaml?style=for-the-badge&logo=github" alt="CI workflow build status badge">
     </a>
     <a title="CD workflow" href="https://github.com/yamporg/mods/actions/workflows/release.yaml">
-        <img src="https://img.shields.io/github/workflow/status/yamporg/mods/CD?style=for-the-badge&label=release&logo=github" alt="CD workflow release status badge">
+        <img src="https://img.shields.io/github/actions/workflow/status/yamporg/mods/release.yaml?style=for-the-badge&label=release&logo=github" alt="CD workflow release status badge">
     </a>
 </p>
 
@@ -18,6 +18,10 @@ Monorepo for Minecraft mod projects.
     <br>
     <a title="IFBHFix mod" href="https://www.curseforge.com/minecraft/mc-mods/ifbhfix">
         <img src="https://cf.way2muchnoise.eu/full_446961_IFBHFix%20%7C_downloads.svg?badge_style=for_the_badge" alt="IFBHFix mod downloads counter badge">
+    </a>
+    <br>
+    <a title="NopRecipeBook mod" href="https://www.curseforge.com/minecraft/mc-mods/nop-recipe-book">
+        <img src="https://cf.way2muchnoise.eu/full_829142_NopRecipeBook%20%7C_downloads.svg?badge_style=for_the_badge" alt="NopRecipeBook mod downloads counter badge">
     </a>
 </p>
 
