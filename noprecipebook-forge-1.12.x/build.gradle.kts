@@ -1,7 +1,7 @@
 plugins {
     id("net.minecraftforge.gradle") version "5.1.58"
     id("io.github.CDAGaming.cursegradle") version "1.6.0"
-    id("co.riiid.gradle") version "0.4.2"
+    id("com.github.breadmoirai.github-release") version "2.4.1"
     id("io.github.yamporg.gradle.env-version")
     id("io.github.yamporg.gradle.upload-task")
     id("io.github.yamporg.gradle.curse-release")
@@ -61,7 +61,7 @@ curseforge {
     }
 }
 
-github {
-    body = file("CHANGELOG.md").readText()
-    setAssets(tasks.jar.get().archiveFile.get().asFile.path)
+githubRelease {
+    body(file("CHANGELOG.md").readText())
+    releaseAssets(tasks.jar.get().archiveFile)
 }
