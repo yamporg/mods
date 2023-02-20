@@ -18,7 +18,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Set up Gradle
-        uses: gradle/gradle-build-action@v2.3.3
+        uses: gradle/gradle-build-action@v2.4.0
         # FIXME: either parse version from properties or implement in action.
         with:
           gradle-version: 7.5.1
