@@ -10,4 +10,5 @@ rootProject.name = "mods"
 include(
     "darkness-forge-1.12.x",
     "ifbhfix-forge-1.12.x",
+    "noprecipebook-forge-1.12.x",
 )
